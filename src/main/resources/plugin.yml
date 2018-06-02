@@ -2,3 +2,5 @@ name: ${project.name}
 main: com.spigotcodingacademy.deviousminescartel.DeviousMines
 version: ${project.version}
 author: BLitZzMc
+commands:
+   cartel:
