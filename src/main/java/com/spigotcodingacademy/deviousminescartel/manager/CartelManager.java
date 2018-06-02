@@ -1,5 +1,6 @@
 package com.spigotcodingacademy.deviousminescartel.manager;
 
+import com.nametagedit.plugin.NametagEdit;
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import org.bukkit.Bukkit;
@@ -58,6 +59,8 @@ public class CartelManager {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+        NametagEdit.getApi().setNametag(player, null, null);
     }
 
     public void leaveCartel(Player player) {
@@ -70,6 +73,7 @@ public class CartelManager {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        NametagEdit.getApi().setNametag(player, null, null);
     }
 
     public void inviteCartel(Player player, String string) {
@@ -83,6 +87,9 @@ public class CartelManager {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+        String prefix = DeviousMines.getCartelManager().getCartel(player);
+        NametagEdit.getApi().setNametag(player, "&7" + prefix + " &f", null);
     }
 
     public boolean inCartel(Player player) {
@@ -149,5 +156,8 @@ public class CartelManager {
         }
 
         Bukkit.broadcastMessage(Chat.color(Chat.prefix + "&7Cartel &b" + string + " &7has been created!"));
+
+        String prefix = DeviousMines.getCartelManager().getCartel(player);
+        NametagEdit.getApi().setNametag(player, "&7" + prefix + " &f", null);
     }
 }

@@ -1,5 +1,6 @@
 package com.spigotcodingacademy.deviousminescartel.listeners;
 
+import com.nametagedit.plugin.NametagEdit;
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,5 +15,10 @@ public class PlayerJoinListener implements Listener {
 
         DeviousMines.getCartelManager().genPlayer(player);
 
+        String prefix = DeviousMines.getCartelManager().getCartel(player);
+
+        if (DeviousMines.getCartelManager().inCartel(player)) {
+            NametagEdit.getApi().setNametag(player, "&7" + prefix + " &f", null);
+        }
     }
 }

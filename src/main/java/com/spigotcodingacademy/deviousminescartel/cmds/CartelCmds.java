@@ -22,7 +22,6 @@ public class CartelCmds implements CommandExecutor {
                 Chat.msg(
                         player,
                         Chat.prefix + "Cartel Commands:",
-                        "&6&l* &7/cartel info",
                         "&6&l* &7/cartel create <name>",
                         "&6&l* &7/cartel disband <name>",
                         "&6&l* &7/cartel invite <player>",
@@ -34,7 +33,6 @@ public class CartelCmds implements CommandExecutor {
 
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("create")) {
-
                     if (args.length < 2) {
                         Chat.msg(
                                 player,
