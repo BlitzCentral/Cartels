@@ -4,6 +4,7 @@ import com.nametagedit.plugin.NametagEdit;
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -121,6 +122,52 @@ public class CartelManager {
             return cartelName;
         }
         return null;
+    }
+
+    public void setCartelLocation(Player player) {
+
+        Location loc = player.getLocation();
+
+        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        if (!cartel.exists()) {
+            return;
+        } else{
+            try{
+                YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
+                CartelData.set("Cartel.Home.isSet", "true");
+                CartelData.set("Cartel.Home.x", loc.getBlockX());
+                CartelData.set("Cartel.Home.y", loc.getBlockY());
+                CartelData.set("Cartel.Home.z", loc.getBlockZ());
+                CartelData.set("Cartel.Home.Yaw", loc.getYaw());
+                CartelData.set("Cartel.Home.Pitch", loc.getPitch());
+                CartelData.save(cartel);
+                Chat.msg(player, Chat.prefix + "&7Cartel home has been set!");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    public boolean cartelHasHome(Player player) {
+
+        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
+
+        if (CartelData.get("Cartel.Home.isSet").equals("true")) {
+            return true;
+        }
+        return false;
+    }
+
+    public void teleportPlayerHome(Player player) {
+        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
+        CartelData.get("Cartel.Home.x");
+        CartelData.get("Cartel.Home.y");
+        CartelData.get("Cartel.Home.z");
+        CartelData.get("Cartel.Home.Yaw");
+        CartelData.get("Cartel.Home.Pitch");
+
     }
 
     public void createCartel(Player player, String string) {

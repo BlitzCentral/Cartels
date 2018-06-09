@@ -1,6 +1,7 @@
 package com.spigotcodingacademy.deviousminescartel.cmds;
 
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
+import com.spigotcodingacademy.deviousminescartel.manager.CartelManager;
 import com.spigotcodingacademy.deviousminescartel.manager.PlayerData;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import com.spigotcodingacademy.deviousminescartel.utils.Delay;
@@ -26,7 +27,8 @@ public class CartelCmds implements CommandExecutor {
                         "&6&l* &7/cartel disband <name>",
                         "&6&l* &7/cartel invite <player>",
                         "&6&l* &7/cartel join <name>",
-                        "&6&l* &7/cartel leave"
+                        "&6&l* &7/cartel leave",
+                        "&6&l* &7/cartel sethome"
                 );
                 return true;
             }
@@ -67,6 +69,35 @@ public class CartelCmds implements CommandExecutor {
                     DeviousMines.getCartelManager().createCartel(player, cartelName);
 
                     return true;
+                }
+
+                if (args[0].equalsIgnoreCase("sethome")) {
+                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                        Chat.msg(
+                                player,
+                                Chat.prefix + "&7You must be in a Cartel to run this command!"
+                        );
+                        return true;
+                    }
+
+                    if (!DeviousMines.getCartelManager().isOwner(player, DeviousMines.getCartelManager().getCartel(player))) {
+                        Chat.msg(player, Chat.prefix + "&7You must be the Cartel owner to run that command!");
+                        return true;
+                    }
+
+                    DeviousMines.getCartelManager().setCartelLocation(player);
+
+                    return true;
+                }
+
+                if (args[0].equalsIgnoreCase("home")) {
+                    if (DeviousMines.getCartelManager().cartelHasHome(player)) {
+
+                    }
+                }
+
+                if (args[0].equalsIgnoreCase("clearhome")) {
+                    
                 }
 
                 if (args[0].equalsIgnoreCase("disband")) {
@@ -132,14 +163,25 @@ public class CartelCmds implements CommandExecutor {
                     }
 
                     if (!PlayerData.invites.containsKey(target)) {
-                        Chat.msg(player, Chat.prefix + "&b" + target.getName() + " &7has been invited to &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!");
+                        Chat.msg(
+                                player,
+                                Chat.prefix + "&b" + target.getName() + " &7has been invited to &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!",
+                                Chat.prefix + "&7Warning! Invite will timeout in 15 seconds!"
+                                );
                         Chat.msg(target, Chat.prefix + "&7You have been invited to join &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!");
 
                         PlayerData.invites.put(player, DeviousMines.getCartelManager().getCartel(player).toLowerCase());
 
                         Delay.until(300, () -> {
+
+                            if (DeviousMines.getCartelManager().getCartel(target) == null) {
+                                Chat.msg(
+                                        player,
+                                        Chat.prefix + "&7Invite timed out!"
+                                );
+                            }
+
                             PlayerData.invites.remove(player);
-                            Chat.msg(player, Chat.prefix + "&7Invite timed out!");
                         });
                         return true;
                     } else{
