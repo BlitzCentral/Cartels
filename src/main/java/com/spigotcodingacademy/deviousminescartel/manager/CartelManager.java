@@ -3,6 +3,7 @@ package com.spigotcodingacademy.deviousminescartel.manager;
 import com.nametagedit.plugin.NametagEdit;
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
+import com.spigotcodingacademy.deviousminescartel.utils.Delay;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -162,12 +163,17 @@ public class CartelManager {
     public void teleportPlayerHome(Player player) {
         File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
-        CartelData.get("Cartel.Home.x");
-        CartelData.get("Cartel.Home.y");
-        CartelData.get("Cartel.Home.z");
-        CartelData.get("Cartel.Home.Yaw");
-        CartelData.get("Cartel.Home.Pitch");
+        double x = CartelData.getDouble("Cartel.Home.x");
+        double y = CartelData.getDouble("Cartel.Home.y");
+        double z = CartelData.getDouble("Cartel.Home.z");
+        int yaw = CartelData.getInt("Cartel.Home.Yaw");
+        int pitch = CartelData.getInt("Cartel.Home.Pitch");
 
+        player.teleport(new Location(player.getWorld() ,x, y, z, yaw, pitch));
+
+        PlayerData.homeCooldown.add(player);
+
+        Delay.until(DeviousMines.getInstance().getConfig().getInt("homeDelay") * 1200, () -> PlayerData.homeCooldown.remove(player));
     }
 
     public void createCartel(Player player, String string) {

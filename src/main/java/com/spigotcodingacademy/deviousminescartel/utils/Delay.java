@@ -8,5 +8,4 @@ public class Delay {
     public static void until(long time, Runnable runnable) {
         Bukkit.getScheduler().runTaskLater(DeviousMines.getInstance(), runnable, time);
     }
-
 }

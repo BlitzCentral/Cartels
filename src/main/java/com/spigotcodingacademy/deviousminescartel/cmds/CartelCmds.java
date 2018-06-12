@@ -28,6 +28,7 @@ public class CartelCmds implements CommandExecutor {
                         "&6&l* &7/cartel invite <player>",
                         "&6&l* &7/cartel join <name>",
                         "&6&l* &7/cartel leave",
+                        "&6&l* &7/cartel home",
                         "&6&l* &7/cartel sethome"
                 );
                 return true;
@@ -91,13 +92,20 @@ public class CartelCmds implements CommandExecutor {
                 }
 
                 if (args[0].equalsIgnoreCase("home")) {
-                    if (DeviousMines.getCartelManager().cartelHasHome(player)) {
 
+                    if (PlayerData.homeCooldown.contains(player)) {
+                        Chat.msg(player, Chat.prefix + "&7Home cooldown in effect!");
+                        return true;
                     }
-                }
 
-                if (args[0].equalsIgnoreCase("clearhome")) {
-                    
+                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                        Chat.msg(player, Chat.prefix + "&7You must be in a Cartel to run this command!");
+                        return true;
+                    }
+
+                    if (DeviousMines.getCartelManager().cartelHasHome(player)) {
+                        DeviousMines.getCartelManager().teleportPlayerHome(player);
+                    }
                 }
 
                 if (args[0].equalsIgnoreCase("disband")) {
