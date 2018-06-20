@@ -1,6 +1,5 @@
 package com.spigotcodingacademy.deviousminescartel.manager;
 
-import com.nametagedit.plugin.NametagEdit;
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import com.spigotcodingacademy.deviousminescartel.utils.Delay;
@@ -62,7 +61,6 @@ public class CartelManager {
             e1.printStackTrace();
         }
 
-        NametagEdit.getApi().setNametag(player, null, null);
     }
 
     public void leaveCartel(Player player) {
@@ -75,7 +73,7 @@ public class CartelManager {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        NametagEdit.getApi().setNametag(player, null, null);
+        Chat.msg(player, Chat.prefix + "&7Cartel left successfully!");
     }
 
     public void inviteCartel(Player player, String string) {
@@ -91,7 +89,6 @@ public class CartelManager {
         }
 
         String prefix = DeviousMines.getCartelManager().getCartel(player);
-        NametagEdit.getApi().setNametag(player, "&7" + prefix + " &f", null);
     }
 
     public boolean inCartel(Player player) {
@@ -176,8 +173,21 @@ public class CartelManager {
         Delay.until(DeviousMines.getInstance().getConfig().getInt("homeDelay") * 1200, () -> PlayerData.homeCooldown.remove(player));
     }
 
-    public void createCartel(Player player, String string) {
+    public void kickMember(Player player) {
+        File Player = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        try {
+            Player.createNewFile();
+            YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Player);
+            PlayerData.set("Player.inCartel", "false");
+            PlayerData.set("Player.Cartel", "");
+            PlayerData.save(Player);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Chat.msg(player, Chat.prefix + "&7You have been kicked from the cartel!");
+    }
 
+    public void createCartel(Player player, String string) {
         File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
         File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         if (cartel.exists()) {
@@ -189,6 +199,7 @@ public class CartelManager {
                 YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
                 CartelData.set("Cartel.Name", string);
                 CartelData.set("Cartel.Owner", player.getUniqueId().toString());
+                CartelData.set("Cartel.Home.isSet", "false");
                 PlayerData.set("Player.inCartel", "true");
                 PlayerData.save(Players);
                 CartelData.save(cartel);
@@ -209,8 +220,5 @@ public class CartelManager {
         }
 
         Bukkit.broadcastMessage(Chat.color(Chat.prefix + "&7Cartel &b" + string + " &7has been created!"));
-
-        String prefix = DeviousMines.getCartelManager().getCartel(player);
-        NametagEdit.getApi().setNametag(player, "&7" + prefix + " &f", null);
     }
 }

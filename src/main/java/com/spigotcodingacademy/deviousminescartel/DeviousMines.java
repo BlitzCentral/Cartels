@@ -1,6 +1,7 @@
 package com.spigotcodingacademy.deviousminescartel;
 
 import com.spigotcodingacademy.deviousminescartel.cmds.CartelCmds;
+import com.spigotcodingacademy.deviousminescartel.listeners.PlayerChatListener;
 import com.spigotcodingacademy.deviousminescartel.listeners.PlayerJoinListener;
 import com.spigotcodingacademy.deviousminescartel.manager.CartelManager;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class DeviousMines extends JavaPlugin {
         players.mkdir();
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
 
         getCommand("cartel").setExecutor(new CartelCmds());
 
