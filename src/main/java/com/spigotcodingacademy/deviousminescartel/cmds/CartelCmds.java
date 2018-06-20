@@ -170,8 +170,9 @@ public class CartelCmds implements CommandExecutor {
 
                     Player target = Bukkit.getPlayer(args[1]);
 
-                    if (!DeviousMines.getCartelManager().isOwner(target, DeviousMines.getCartelManager().getCartel(target))) {
+                    if (!DeviousMines.getCartelManager().isOwner(player, DeviousMines.getCartelManager().getCartel(player))) {
                         Chat.msg(player, Chat.prefix + "&7You must be the Cartel owner to run this command!");
+                        return true;
                     }
 
                     if (target == null) {
