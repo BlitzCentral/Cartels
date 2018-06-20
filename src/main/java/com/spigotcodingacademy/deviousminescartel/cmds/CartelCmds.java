@@ -27,6 +27,7 @@ public class CartelCmds implements CommandExecutor {
                         "&6&l* &7/cartel disband <name>",
                         "&6&l* &7/cartel invite <player>",
                         "&6&l* &7/cartel join <name>",
+                        "&6&l* &7/cartel kick <player>",
                         "&6&l* &7/cartel leave",
                         "&6&l* &7/cartel home",
                         "&6&l* &7/cartel sethome"
@@ -82,6 +83,10 @@ public class CartelCmds implements CommandExecutor {
                 }
 
                 if (args[0].equalsIgnoreCase("sethome")) {
+                    if (PlayerData.createhomeCooldown.contains(player)) {
+                        Chat.msg(player, Chat.prefix + "&7Cooldown in affect! Try again later.");
+                    }
+
                     if (!DeviousMines.getCartelManager().inCartel(player)) {
                         Chat.msg(
                                 player,
@@ -96,6 +101,10 @@ public class CartelCmds implements CommandExecutor {
                     }
 
                     DeviousMines.getCartelManager().setCartelLocation(player);
+
+                    PlayerData.createhomeCooldown.add(player);
+
+                    Delay.until(3000, () -> PlayerData.createhomeCooldown.remove(player));
 
                     return true;
                 }
@@ -160,6 +169,10 @@ public class CartelCmds implements CommandExecutor {
                     }
 
                     Player target = Bukkit.getPlayer(args[1]);
+
+                    if (!DeviousMines.getCartelManager().isOwner(target, DeviousMines.getCartelManager().getCartel(target))) {
+                        Chat.msg(player, Chat.prefix + "&7You must be the Cartel owner to run this command!");
+                    }
 
                     if (target == null) {
                         Chat.msg(player, Chat.prefix + "&7Player selected does not exist or is not online!");

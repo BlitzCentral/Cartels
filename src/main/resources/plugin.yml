@@ -4,3 +4,4 @@ version: ${project.version}
 author: BLitZzMc
 commands:
    cartel:
+      aliases: [c, cart]
