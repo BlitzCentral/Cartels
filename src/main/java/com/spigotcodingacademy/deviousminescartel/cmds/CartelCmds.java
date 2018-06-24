@@ -9,7 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.List;
+import java.util.UUID;
 
 public class CartelCmds implements CommandExecutor {
 
@@ -28,6 +33,7 @@ public class CartelCmds implements CommandExecutor {
                         "&6&l* &7/cartel invite <player>",
                         "&6&l* &7/cartel join <name>",
                         "&6&l* &7/cartel kick <player>",
+                        "&6&l* &7/cartel list",
                         "&6&l* &7/cartel leave",
                         "&6&l* &7/cartel home",
                         "&6&l* &7/cartel sethome"
@@ -305,6 +311,30 @@ public class CartelCmds implements CommandExecutor {
 
                     DeviousMines.getCartelManager().inviteCartel(player, cartelName);
                     PlayerData.invites.remove(player);
+                }
+
+                if (args[0].equalsIgnoreCase("list")) {
+
+                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                        Chat.msg(player, Chat.prefix + "&7You must be in a cartel to run that command!");
+                        return true;
+                    }
+
+                    File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+                    YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
+
+                    List<String> members = CartelData.getStringList("Members");
+                    Chat.msg(
+                            player,
+                            Chat.prefix + "&7Cartel Members for &b" + DeviousMines.getCartelManager().getCartel(player) + "&7:",
+                            "&6* &b" + DeviousMines.getCartelManager().getOwner(player)
+                    );
+
+                    for (String name : members) {
+                        Chat.msg(player, "&6* &7" + Bukkit.getOfflinePlayer(UUID.fromString(name)).getName());
+                    }
+
+                    return true;
                 }
             }
         }

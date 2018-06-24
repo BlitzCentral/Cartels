@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 
 public class CartelManager {
 
@@ -66,9 +68,17 @@ public class CartelManager {
     public void leaveCartel(Player player) {
         try {
             File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+            File Cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
+            YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartel);
             PlayerData.set("Player.Cartel", "");
             PlayerData.set("Player.inCartel", "false");
+
+            List<String> members = CartelData.getStringList("Members");
+            members.remove(player.getUniqueId().toString());
+            CartelData.set("Members", members);
+
+            CartelData.save(Cartel);
             PlayerData.save(Players);
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -80,10 +90,18 @@ public class CartelManager {
         Chat.msg(player, Chat.prefix + "&7Invitation accepted successfully!");
         try {
             File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+            File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
+            YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
             PlayerData.set("Player.Cartel", string);
             PlayerData.set("Player.inCartel", "true");
+
+            List<String> members = CartelData.getStringList("Members");
+            members.add(player.getUniqueId().toString());
+            CartelData.set("Members", members);
+
             PlayerData.save(Players);
+            CartelData.save(Cartels);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -173,13 +191,30 @@ public class CartelManager {
         Delay.until(DeviousMines.getInstance().getConfig().getInt("homeDelay") * 1200, () -> PlayerData.homeCooldown.remove(player));
     }
 
+    public String getOwner(Player player) {
+        File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
+        String uuid = CartelData.getString("Cartel.Owner");
+        String cartelOwnerName = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+
+        return cartelOwnerName;
+    }
+
     public void kickMember(Player player) {
         File Player = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
         try {
             Player.createNewFile();
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Player);
+            YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
             PlayerData.set("Player.inCartel", "false");
             PlayerData.set("Player.Cartel", "");
+
+            List<String> members = CartelData.getStringList("Members");
+            members.remove(player.getUniqueId().toString());
+            CartelData.set("Members", members);
+
+            CartelData.save(Cartels);
             PlayerData.save(Player);
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -201,6 +236,7 @@ public class CartelManager {
                 CartelData.set("Cartel.Owner", player.getUniqueId().toString());
                 CartelData.set("Cartel.Home.isSet", "false");
                 PlayerData.set("Player.inCartel", "true");
+                CartelData.set("Members", "");
                 PlayerData.save(Players);
                 CartelData.save(cartel);
             } catch (IOException el) {
