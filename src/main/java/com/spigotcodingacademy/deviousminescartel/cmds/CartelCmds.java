@@ -136,6 +136,26 @@ public class CartelCmds implements CommandExecutor {
                     return true;
                 }
 
+                if (args[0].equalsIgnoreCase("chat")) {
+                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                        Chat.msg(player, Chat.prefix + "&7You must be in a Cartel to run this command!");
+
+                        return true;
+                    }
+
+                    if (PlayerData.cartelChat.containsKey(player)) {
+                        PlayerData.cartelChat.remove(player);
+                        Chat.msg(player, Chat.prefix + "&7Cartel chat Disabled!");
+
+                        return true;
+                    } else {
+                        PlayerData.cartelChat.put(player, DeviousMines.getCartelManager().getCartel(player));
+                        Chat.msg(player, Chat.prefix + "&7Cartel chat Enabled!");
+
+                        return true;
+                    }
+                }
+
                 if (args[0].equalsIgnoreCase("disband")) {
                     if (args.length < 2) {
                         Chat.msg(
