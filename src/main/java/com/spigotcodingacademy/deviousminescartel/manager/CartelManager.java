@@ -5,6 +5,7 @@ import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import com.spigotcodingacademy.deviousminescartel.utils.Delay;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -151,6 +152,7 @@ public class CartelManager {
             try{
                 YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
                 CartelData.set("Cartel.Home.isSet", "true");
+                CartelData.set("Cartel.Home.World", player.getWorld());
                 CartelData.set("Cartel.Home.x", loc.getBlockX());
                 CartelData.set("Cartel.Home.y", loc.getBlockY());
                 CartelData.set("Cartel.Home.z", loc.getBlockZ());
@@ -178,13 +180,15 @@ public class CartelManager {
     public void teleportPlayerHome(Player player) {
         File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
+
+        World world = Bukkit.getServer().getWorld(CartelData.getString("Cartel.Home.World"));
         double x = CartelData.getDouble("Cartel.Home.x");
         double y = CartelData.getDouble("Cartel.Home.y");
         double z = CartelData.getDouble("Cartel.Home.z");
         int yaw = CartelData.getInt("Cartel.Home.Yaw");
         int pitch = CartelData.getInt("Cartel.Home.Pitch");
 
-        player.teleport(new Location(player.getWorld() ,x, y, z, yaw, pitch));
+        player.teleport(new Location(world ,x, y, z, yaw, pitch));
 
         PlayerData.homeCooldown.add(player);
 
