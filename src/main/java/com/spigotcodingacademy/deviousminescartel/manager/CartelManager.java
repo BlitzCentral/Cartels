@@ -64,6 +64,8 @@ public class CartelManager {
             e1.printStackTrace();
         }
 
+        PlayerData.cartelChat.remove(player);
+
     }
 
     public void leaveCartel(Player player) {
@@ -152,7 +154,7 @@ public class CartelManager {
             try{
                 YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
                 CartelData.set("Cartel.Home.isSet", "true");
-                CartelData.set("Cartel.Home.World", player.getWorld());
+                CartelData.set("Cartel.Home.World", player.getWorld().getName());
                 CartelData.set("Cartel.Home.x", loc.getBlockX());
                 CartelData.set("Cartel.Home.y", loc.getBlockY());
                 CartelData.set("Cartel.Home.z", loc.getBlockZ());
@@ -224,6 +226,7 @@ public class CartelManager {
             e1.printStackTrace();
         }
         Chat.msg(player, Chat.prefix + "&7You have been kicked from the cartel!");
+        PlayerData.cartelChat.remove(player);
     }
 
     public void createCartel(Player player, String string) {

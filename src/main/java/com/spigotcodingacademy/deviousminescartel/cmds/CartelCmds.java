@@ -1,7 +1,6 @@
 package com.spigotcodingacademy.deviousminescartel.cmds;
 
 import com.spigotcodingacademy.deviousminescartel.DeviousMines;
-import com.spigotcodingacademy.deviousminescartel.manager.CartelManager;
 import com.spigotcodingacademy.deviousminescartel.manager.PlayerData;
 import com.spigotcodingacademy.deviousminescartel.utils.Chat;
 import com.spigotcodingacademy.deviousminescartel.utils.Delay;
@@ -136,7 +135,7 @@ public class CartelCmds implements CommandExecutor {
                     return true;
                 }
 
-                if (args[0].equalsIgnoreCase("chat")) {
+                /*if (args[0].equalsIgnoreCase("chat")) {
                     if (!DeviousMines.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You must be in a Cartel to run this command!");
 
@@ -154,7 +153,7 @@ public class CartelCmds implements CommandExecutor {
 
                         return true;
                     }
-                }
+                }*/
 
                 if (args[0].equalsIgnoreCase("disband")) {
                     if (args.length < 2) {

@@ -1,5 +1,6 @@
 package com.spigotcodingacademy.deviousminescartel.utils;
 
+import com.spigotcodingacademy.deviousminescartel.DeviousMines;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -7,7 +8,7 @@ import java.util.Arrays;
 
 public class Chat {
 
-    public static String prefix = color("&7(&6DM-Cartel&7) ");
+    public static String prefix = color(DeviousMines.getInstance().getConfig().getString("prefix"));
 
     public static void msg(Player player, String... message) {
         Arrays.stream(message).forEach(s -> player.sendMessage(color(s)));

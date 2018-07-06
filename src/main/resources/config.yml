@@ -4,3 +4,6 @@
 
 # In minutes
 homeDelay: 1
+
+# Chat prefix
+prefix: "&7(&6DM-Cartel&7) "
