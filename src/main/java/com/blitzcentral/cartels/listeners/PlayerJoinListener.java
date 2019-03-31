@@ -1,9 +1,6 @@
-package com.spigotcodingacademy.deviousminescartel.listeners;
+package com.blitzcentral.cartels.listeners;
 
-import com.spigotcodingacademy.deviousminescartel.DeviousMines;
-import com.spigotcodingacademy.deviousminescartel.utils.Chat;
-import com.spigotcodingacademy.deviousminescartel.utils.Delay;
-import org.bukkit.Bukkit;
+import com.blitzcentral.cartels.DeviousMines;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

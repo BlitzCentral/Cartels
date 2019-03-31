@@ -1,9 +1,9 @@
-package com.spigotcodingacademy.deviousminescartel;
+package com.blitzcentral.cartels;
 
-import com.spigotcodingacademy.deviousminescartel.cmds.CartelCmds;
-import com.spigotcodingacademy.deviousminescartel.listeners.PlayerChatListener;
-import com.spigotcodingacademy.deviousminescartel.listeners.PlayerJoinListener;
-import com.spigotcodingacademy.deviousminescartel.manager.CartelManager;
+import com.blitzcentral.cartels.listeners.PlayerJoinListener;
+import com.blitzcentral.cartels.manager.CartelManager;
+import com.blitzcentral.cartels.cmds.CartelCmds;
+import com.blitzcentral.cartels.listeners.PlayerChatListener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 

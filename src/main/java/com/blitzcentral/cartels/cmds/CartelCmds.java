@@ -1,9 +1,9 @@
-package com.spigotcodingacademy.deviousminescartel.cmds;
+package com.blitzcentral.cartels.cmds;
 
-import com.spigotcodingacademy.deviousminescartel.DeviousMines;
-import com.spigotcodingacademy.deviousminescartel.manager.PlayerData;
-import com.spigotcodingacademy.deviousminescartel.utils.Chat;
-import com.spigotcodingacademy.deviousminescartel.utils.Delay;
+import com.blitzcentral.cartels.DeviousMines;
+import com.blitzcentral.cartels.manager.PlayerData;
+import com.blitzcentral.cartels.utils.Chat;
+import com.blitzcentral.cartels.utils.Delay;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

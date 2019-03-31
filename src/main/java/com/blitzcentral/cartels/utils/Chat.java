@@ -1,6 +1,6 @@
-package com.spigotcodingacademy.deviousminescartel.utils;
+package com.blitzcentral.cartels.utils;
 
-import com.spigotcodingacademy.deviousminescartel.DeviousMines;
+import com.blitzcentral.cartels.DeviousMines;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

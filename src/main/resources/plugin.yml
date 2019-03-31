@@ -1,5 +1,5 @@
 name: ${project.name}
-main: com.spigotcodingacademy.deviousminescartel.DeviousMines
+main: DeviousMines
 version: ${project.version}
 author: BLitZzMc
 commands:

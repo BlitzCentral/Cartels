@@ -1,4 +1,4 @@
-package com.spigotcodingacademy.deviousminescartel.manager;
+package com.blitzcentral.cartels.manager;
 
 import org.bukkit.entity.Player;
 
