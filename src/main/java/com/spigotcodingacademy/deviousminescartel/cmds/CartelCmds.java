@@ -131,6 +131,7 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
+                    Chat.msg(player, Chat.prefix + "Teleporting to Cartel home!");
                     DeviousMines.getCartelManager().teleportPlayerHome(player);
                     return true;
                 }
@@ -263,18 +264,20 @@ public class CartelCmds implements CommandExecutor {
                         Chat.msg(
                                 player,
                                 Chat.prefix + "&b" + target.getName() + " &7has been invited to &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!",
-                                Chat.prefix + "&7Warning! Invite will timeout in 15 seconds!"
+                                Chat.prefix + "&7Warning! Invite will timeout in 30 seconds!"
                                 );
                         Chat.msg(target, Chat.prefix + "&7You have been invited to join &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!");
+                        Chat.msg(target, Chat.prefix + "&7To accept do:&b /cartel join " + DeviousMines.getCartelManager().getCartel(player));
 
                         PlayerData.invites.put(target, DeviousMines.getCartelManager().getCartel(player));
 
-                        Delay.until(300, () -> {
+                        Delay.until(600, () -> {
                             if (!DeviousMines.getCartelManager().inCartel(target)) {
                                 Chat.msg(
                                         player,
-                                        Chat.prefix + "&7Invite timed out!"
+                                        Chat.prefix + "&7Cartel invite timed out."
                                 );
+                                Chat.msg(target, Chat.prefix + "&7Cartel invite timed out.");
                                 PlayerData.invites.remove(target, DeviousMines.getCartelManager().getCartel(player));
                             }
 
@@ -295,7 +298,7 @@ public class CartelCmds implements CommandExecutor {
                     if (DeviousMines.getCartelManager().isOwner(player, cartel)) {
                         Chat.msg(
                                 player,
-                                Chat.prefix + "&7You must disband to leave to cartel!",
+                                Chat.prefix + "&7You are the owner of the cartel!",
                                 "&6&l* &7Try /cartel disband <name>"
                         );
                         return true;

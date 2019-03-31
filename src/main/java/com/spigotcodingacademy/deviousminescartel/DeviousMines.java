@@ -28,8 +28,6 @@ public class DeviousMines extends JavaPlugin {
         data.mkdir();
         File cartels = new File(getDataFolder(), "data/cartels");
         cartels.mkdir();
-        File cartelsBackup = new File(getDataFolder(), "data/cartels/disbanded");
-        cartelsBackup.mkdir();
         File players = new File(getDataFolder(), "data/players");
         players.mkdir();
 

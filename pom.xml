@@ -17,6 +17,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>upstream</id>
+            <url>http://ci.nametagedit.com/plugin/repository/everything/</url>
+        </repository>
     </repositories>
     <dependencies>
         <!--Spigot API-->
@@ -26,16 +30,23 @@
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
             <scope>provided</scope>
         </dependency>
+        <!--NameTagEdit API-->
+        <dependency>
+            <groupId>com.nametagedit</groupId>
+            <artifactId>nametagedit</artifactId>
+            <version>4.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>DeviousMines-Cartel</finalName>
+        <finalName>Cartels</finalName>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
@@ -56,6 +67,4 @@
             </resource>
         </resources>
     </build>
-
-
 </project>
