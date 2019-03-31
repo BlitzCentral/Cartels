@@ -9,10 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class DeviousMines extends JavaPlugin {
+public class Cartels extends JavaPlugin {
 
     @Getter
-    public static DeviousMines instance;
+    public static Cartels instance;
     @Getter
     private static CartelManager cartelManager;
 

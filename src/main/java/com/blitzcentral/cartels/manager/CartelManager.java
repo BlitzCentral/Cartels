@@ -1,6 +1,6 @@
 package com.blitzcentral.cartels.manager;
 
-import com.blitzcentral.cartels.DeviousMines;
+import com.blitzcentral.cartels.Cartels;
 import com.blitzcentral.cartels.utils.Chat;
 import com.blitzcentral.cartels.utils.Delay;
 import org.bukkit.Bukkit;
@@ -16,15 +16,15 @@ import java.util.UUID;
 
 public class CartelManager {
 
-    private DeviousMines main;
+    private Cartels main;
 
-    public CartelManager(DeviousMines main) {
+    public CartelManager(Cartels main) {
         this.main = main;
     }
 
     public void genPlayer(Player player) {
 
-        File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         if (!Players.exists()){
             try {
                 Players.createNewFile();
@@ -41,7 +41,7 @@ public class CartelManager {
     }
 
     public boolean doesExist(String string) {
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
 
         if (cartel.exists()) {
             return true;
@@ -50,12 +50,12 @@ public class CartelManager {
     }
 
     public void disbandCartel(Player player, String string) {
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
         Chat.msg(player, Chat.prefix + "&b" + string + " &7has been deleted!");
         cartel.delete();
 
         try {
-            File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+            File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
             PlayerData.set("Player.Cartel", "");
             PlayerData.set("Player.inCartel", "false");
@@ -70,8 +70,8 @@ public class CartelManager {
 
     public void leaveCartel(Player player) {
         try {
-            File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
-            File Cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+            File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+            File Cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", Cartels.getCartelManager().getCartel(player) + ".yml");
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
             YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartel);
             PlayerData.set("Player.Cartel", "");
@@ -92,8 +92,8 @@ public class CartelManager {
     public void inviteCartel(Player player, String string) {
         Chat.msg(player, Chat.prefix + "&7Invitation accepted successfully!");
         try {
-            File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
-            File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
+            File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+            File Cartels = new File(com.blitzcentral.cartels.Cartels.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
             YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
             PlayerData.set("Player.Cartel", string);
@@ -109,11 +109,11 @@ public class CartelManager {
             e1.printStackTrace();
         }
 
-        String prefix = DeviousMines.getCartelManager().getCartel(player);
+        String prefix = Cartels.getCartelManager().getCartel(player);
     }
 
     public boolean inCartel(Player player) {
-        File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
 
         if (PlayerData.get("Player.inCartel").equals("true")) {
@@ -123,7 +123,7 @@ public class CartelManager {
     }
 
     public boolean isOwner(Player player, String string) {
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
 
         if (CartelData.get("Cartel.Owner").equals(player.getUniqueId().toString())) {
@@ -133,7 +133,7 @@ public class CartelManager {
     }
 
     public String getCartel(Player player) {
-        File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Players);
         String cartelName = PlayerData.get("Player.Cartel").toString();
 
@@ -147,7 +147,7 @@ public class CartelManager {
 
         Location loc = player.getLocation();
 
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", Cartels.getCartelManager().getCartel(player) + ".yml");
         if (!cartel.exists()) {
             return;
         } else{
@@ -170,7 +170,7 @@ public class CartelManager {
 
     public boolean cartelHasHome(Player player) {
 
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", Cartels.getCartelManager().getCartel(player) + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
 
         if (CartelData.get("Cartel.Home.isSet").equals("true")) {
@@ -180,7 +180,7 @@ public class CartelManager {
     }
 
     public void teleportPlayerHome(Player player) {
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", Cartels.getCartelManager().getCartel(player) + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
 
         World world = Bukkit.getServer().getWorld(CartelData.getString("Cartel.Home.World"));
@@ -194,11 +194,11 @@ public class CartelManager {
 
         PlayerData.homeCooldown.add(player);
 
-        Delay.until(DeviousMines.getInstance().getConfig().getInt("homeDelay") * 1200, () -> PlayerData.homeCooldown.remove(player));
+        Delay.until(Cartels.getInstance().getConfig().getInt("homeDelay") * 1200, () -> PlayerData.homeCooldown.remove(player));
     }
 
     public String getOwner(Player player) {
-        File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        File Cartels = new File(com.blitzcentral.cartels.Cartels.getInstance().getDataFolder() + "/data/cartels", com.blitzcentral.cartels.Cartels.getCartelManager().getCartel(player) + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
         String uuid = CartelData.getString("Cartel.Owner");
         String cartelOwnerName = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
@@ -207,8 +207,8 @@ public class CartelManager {
     }
 
     public void kickMember(Player player) {
-        File Player = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
-        File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+        File Player = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File Cartels = new File(com.blitzcentral.cartels.Cartels.getInstance().getDataFolder() + "/data/cartels", com.blitzcentral.cartels.Cartels.getCartelManager().getCartel(player) + ".yml");
         try {
             Player.createNewFile();
             YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(Player);
@@ -230,8 +230,8 @@ public class CartelManager {
     }
 
     public void createCartel(Player player, String string) {
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
-        File Players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", string + ".yml");
+        File Players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         if (cartel.exists()) {
             Chat.msg(player, Chat.prefix + "&7Cartel already exists!");
         } else{
@@ -251,7 +251,7 @@ public class CartelManager {
             }
         }
 
-        File players = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File players = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         if (players.exists()) {
             try{
                 YamlConfiguration PlayerData = YamlConfiguration.loadConfiguration(players);

@@ -1,6 +1,6 @@
 package com.blitzcentral.cartels.listeners;
 
-import com.blitzcentral.cartels.DeviousMines;
+import com.blitzcentral.cartels.Cartels;
 import com.blitzcentral.cartels.manager.PlayerData;
 import com.blitzcentral.cartels.utils.Chat;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -28,7 +28,7 @@ public class PlayerChatListener implements Listener {
 
         String prefix = getPrefixSuffix(player, "prefix");
 
-        File cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
+        File cartel = new File(Cartels.getInstance().getDataFolder() + "/data/players", player.getUniqueId().toString() + ".yml");
         YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(cartel);
         String cartelName = CartelData.getString("Player.Cartel");
 
@@ -36,7 +36,7 @@ public class PlayerChatListener implements Listener {
             event.setCancelled(true);
 
             for (Player p : PlayerData.cartelChat) {
-                if (!DeviousMines.getCartelManager().getCartel(p).equals(DeviousMines.getCartelManager().getCartel(player))) {
+                if (!Cartels.getCartelManager().getCartel(p).equals(Cartels.getCartelManager().getCartel(player))) {
                     return;
                 } else{
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&cC&8] " + "&8[&b" + cartelName + "&8] &f" + pn + " &8&l>> &7" + event.getMessage()));
@@ -48,7 +48,7 @@ public class PlayerChatListener implements Listener {
 
         if (!PlayerData.cartelChat.containsKey(player)) {
 
-            if (!DeviousMines.getCartelManager().inCartel(player)) {
+            if (!Cartels.getCartelManager().inCartel(player)) {
                 event.setFormat(Chat.color( prefix + " &f" + pn + " &8&l>> &f" + event.getMessage()));
                 return;
             }

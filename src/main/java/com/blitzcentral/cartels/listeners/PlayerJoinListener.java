@@ -1,6 +1,6 @@
 package com.blitzcentral.cartels.listeners;
 
-import com.blitzcentral.cartels.DeviousMines;
+import com.blitzcentral.cartels.Cartels;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,14 +17,14 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        DeviousMines.getCartelManager().genPlayer(player);
+        Cartels.getCartelManager().genPlayer(player);
 
-        String prefix = DeviousMines.getCartelManager().getCartel(player);
+        String prefix = Cartels.getCartelManager().getCartel(player);
 
-        if (DeviousMines.getCartelManager().inCartel(player)) {
-            if (!DeviousMines.getCartelManager().isOwner(player, DeviousMines.getCartelManager().getCartel(player))) {
+        if (Cartels.getCartelManager().inCartel(player)) {
+            if (!Cartels.getCartelManager().isOwner(player, Cartels.getCartelManager().getCartel(player))) {
                 try{
-                    File Cartel = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+                    File Cartel = new File(Cartels.getInstance().getDataFolder() + "/data/cartels", Cartels.getCartelManager().getCartel(player) + ".yml");
                     YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartel);
                     List<String> members = CartelData.getStringList("Members");
 

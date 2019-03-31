@@ -1,6 +1,6 @@
 package com.blitzcentral.cartels.cmds;
 
-import com.blitzcentral.cartels.DeviousMines;
+import com.blitzcentral.cartels.Cartels;
 import com.blitzcentral.cartels.manager.PlayerData;
 import com.blitzcentral.cartels.utils.Chat;
 import com.blitzcentral.cartels.utils.Delay;
@@ -58,12 +58,12 @@ public class CartelCmds implements CommandExecutor {
 
                     String cartelName = args[1];
 
-                    if (DeviousMines.getCartelManager().inCartel(player)) {
+                    if (Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You are already in a cartel!");
                         return true;
                     }
 
-                    if (DeviousMines.getCartelManager().doesExist(cartelName)) {
+                    if (Cartels.getCartelManager().doesExist(cartelName)) {
                         Chat.msg(player, Chat.prefix + "&7Cartel already exists!");
                         return true;
                     }
@@ -78,7 +78,7 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    DeviousMines.getCartelManager().createCartel(player, cartelName);
+                    Cartels.getCartelManager().createCartel(player, cartelName);
 
                     PlayerData.createCooldown.add(player.getUniqueId());
 
@@ -92,7 +92,7 @@ public class CartelCmds implements CommandExecutor {
                         Chat.msg(player, Chat.prefix + "&7Cooldown in affect! Try again later.");
                     }
 
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(
                                 player,
                                 Chat.prefix + "&7You must be in a Cartel to run this command!"
@@ -100,12 +100,12 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().isOwner(player, DeviousMines.getCartelManager().getCartel(player))) {
+                    if (!Cartels.getCartelManager().isOwner(player, Cartels.getCartelManager().getCartel(player))) {
                         Chat.msg(player, Chat.prefix + "&7You must be the Cartel owner to run that command!");
                         return true;
                     }
 
-                    DeviousMines.getCartelManager().setCartelLocation(player);
+                    Cartels.getCartelManager().setCartelLocation(player);
 
                     PlayerData.createhomeCooldown.add(player);
 
@@ -116,12 +116,12 @@ public class CartelCmds implements CommandExecutor {
 
                 if (args[0].equalsIgnoreCase("home")) {
 
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You must be in a Cartel to run this command!");
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().cartelHasHome(player)) {
+                    if (!Cartels.getCartelManager().cartelHasHome(player)) {
                         Chat.msg(player, Chat.prefix + "&7Cartel has no home!");
                         return true;
                     }
@@ -132,12 +132,12 @@ public class CartelCmds implements CommandExecutor {
                     }
 
                     Chat.msg(player, Chat.prefix + "Teleporting to Cartel home!");
-                    DeviousMines.getCartelManager().teleportPlayerHome(player);
+                    Cartels.getCartelManager().teleportPlayerHome(player);
                     return true;
                 }
 
                 /*if (args[0].equalsIgnoreCase("chat")) {
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You must be in a Cartel to run this command!");
 
                         return true;
@@ -149,7 +149,7 @@ public class CartelCmds implements CommandExecutor {
 
                         return true;
                     } else {
-                        PlayerData.cartelChat.put(player, DeviousMines.getCartelManager().getCartel(player));
+                        PlayerData.cartelChat.put(player, Cartels.getCartelManager().getCartel(player));
                         Chat.msg(player, Chat.prefix + "&7Cartel chat Enabled!");
 
                         return true;
@@ -168,18 +168,18 @@ public class CartelCmds implements CommandExecutor {
 
                     String disbandName = args[1];
 
-                    if (!DeviousMines.getCartelManager().doesExist(disbandName)) {
+                    if (!Cartels.getCartelManager().doesExist(disbandName)) {
                         Chat.msg(player, Chat.prefix + "&7Cartel does not exist!");
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().isOwner(player, disbandName)) {
+                    if (!Cartels.getCartelManager().isOwner(player, disbandName)) {
                         Chat.msg(player, Chat.prefix + "&7You must be the owner of the cartel to disband!");
                         return true;
                     }
 
-                    if (DeviousMines.getCartelManager().isOwner(player, disbandName)) {
-                        DeviousMines.getCartelManager().disbandCartel(player, disbandName);
+                    if (Cartels.getCartelManager().isOwner(player, disbandName)) {
+                        Cartels.getCartelManager().disbandCartel(player, disbandName);
                     }
                     return true;
                 }
@@ -196,7 +196,7 @@ public class CartelCmds implements CommandExecutor {
 
                     Player target = Bukkit.getPlayer(args[1]);
 
-                    if (!DeviousMines.getCartelManager().isOwner(player, DeviousMines.getCartelManager().getCartel(player))) {
+                    if (!Cartels.getCartelManager().isOwner(player, Cartels.getCartelManager().getCartel(player))) {
                         Chat.msg(player, Chat.prefix + "&7You must be the Cartel owner to run this command!");
                         return true;
                     }
@@ -211,12 +211,12 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().getCartel(player).equals(DeviousMines.getCartelManager().getCartel(target))) {
+                    if (!Cartels.getCartelManager().getCartel(player).equals(Cartels.getCartelManager().getCartel(target))) {
                         Chat.msg(player, Chat.prefix + "&7Player not found in your cartel!");
                         return true;
                     }
 
-                    DeviousMines.getCartelManager().kickMember(target);
+                    Cartels.getCartelManager().kickMember(target);
                     return true;
                 }
 
@@ -230,7 +230,7 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You must be in a cartel to run that command!");
                         return true;
                     }
@@ -241,7 +241,7 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    if (DeviousMines.getCartelManager().inCartel(target)) {
+                    if (Cartels.getCartelManager().inCartel(target)) {
                         Chat.msg(player, Chat.prefix + "&b" + target.getName() + " &7is already in a cartel!");
                         return true;
                     }
@@ -263,25 +263,25 @@ public class CartelCmds implements CommandExecutor {
                     if (!PlayerData.invites.containsKey(target)) {
                         Chat.msg(
                                 player,
-                                Chat.prefix + "&b" + target.getName() + " &7has been invited to &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!",
+                                Chat.prefix + "&b" + target.getName() + " &7has been invited to &b" + Cartels.getCartelManager().getCartel(player) + "&7!",
                                 Chat.prefix + "&7Warning! Invite will timeout in 30 seconds!"
                                 );
-                        Chat.msg(target, Chat.prefix + "&7You have been invited to join &b" + DeviousMines.getCartelManager().getCartel(player) + "&7!");
-                        Chat.msg(target, Chat.prefix + "&7To accept do:&b /cartel join " + DeviousMines.getCartelManager().getCartel(player));
+                        Chat.msg(target, Chat.prefix + "&7You have been invited to join &b" + Cartels.getCartelManager().getCartel(player) + "&7!");
+                        Chat.msg(target, Chat.prefix + "&7To accept do:&b /cartel join " + Cartels.getCartelManager().getCartel(player));
 
-                        PlayerData.invites.put(target, DeviousMines.getCartelManager().getCartel(player));
+                        PlayerData.invites.put(target, Cartels.getCartelManager().getCartel(player));
 
                         Delay.until(600, () -> {
-                            if (!DeviousMines.getCartelManager().inCartel(target)) {
+                            if (!Cartels.getCartelManager().inCartel(target)) {
                                 Chat.msg(
                                         player,
                                         Chat.prefix + "&7Cartel invite timed out."
                                 );
                                 Chat.msg(target, Chat.prefix + "&7Cartel invite timed out.");
-                                PlayerData.invites.remove(target, DeviousMines.getCartelManager().getCartel(player));
+                                PlayerData.invites.remove(target, Cartels.getCartelManager().getCartel(player));
                             }
 
-                            PlayerData.invites.remove(target, DeviousMines.getCartelManager().getCartel(player));
+                            PlayerData.invites.remove(target, Cartels.getCartelManager().getCartel(player));
                         });
                         return true;
                     }
@@ -289,13 +289,13 @@ public class CartelCmds implements CommandExecutor {
                 }
 
                 if (args[0].equalsIgnoreCase("leave")) {
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You are not in a cartel!");
                         return true;
                     }
 
-                    String cartel = DeviousMines.getCartelManager().getCartel(player);
-                    if (DeviousMines.getCartelManager().isOwner(player, cartel)) {
+                    String cartel = Cartels.getCartelManager().getCartel(player);
+                    if (Cartels.getCartelManager().isOwner(player, cartel)) {
                         Chat.msg(
                                 player,
                                 Chat.prefix + "&7You are the owner of the cartel!",
@@ -304,7 +304,7 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    DeviousMines.getCartelManager().leaveCartel(player);
+                    Cartels.getCartelManager().leaveCartel(player);
                     return true;
 
                 }
@@ -326,30 +326,30 @@ public class CartelCmds implements CommandExecutor {
                         return true;
                     }
 
-                    if (!DeviousMines.getCartelManager().doesExist(cartelName)) {
+                    if (!Cartels.getCartelManager().doesExist(cartelName)) {
                         Chat.msg(player, Chat.prefix + "&7Cartel does not exist!");
                         return true;
                     }
 
-                    DeviousMines.getCartelManager().inviteCartel(player, cartelName);
+                    Cartels.getCartelManager().inviteCartel(player, cartelName);
                     PlayerData.invites.remove(player);
                 }
 
                 if (args[0].equalsIgnoreCase("list")) {
 
-                    if (!DeviousMines.getCartelManager().inCartel(player)) {
+                    if (!Cartels.getCartelManager().inCartel(player)) {
                         Chat.msg(player, Chat.prefix + "&7You must be in a cartel to run that command!");
                         return true;
                     }
 
-                    File Cartels = new File(DeviousMines.getInstance().getDataFolder() + "/data/cartels", DeviousMines.getCartelManager().getCartel(player) + ".yml");
+                    File Cartels = new File(com.blitzcentral.cartels.Cartels.getInstance().getDataFolder() + "/data/cartels", com.blitzcentral.cartels.Cartels.getCartelManager().getCartel(player) + ".yml");
                     YamlConfiguration CartelData = YamlConfiguration.loadConfiguration(Cartels);
 
                     List<String> members = CartelData.getStringList("Members");
                     Chat.msg(
                             player,
-                            Chat.prefix + "&7Cartel Members for &b" + DeviousMines.getCartelManager().getCartel(player) + "&7:",
-                            "&6* &b" + DeviousMines.getCartelManager().getOwner(player)
+                            Chat.prefix + "&7Cartel Members for &b" + com.blitzcentral.cartels.Cartels.getCartelManager().getCartel(player) + "&7:",
+                            "&6* &b" + com.blitzcentral.cartels.Cartels.getCartelManager().getOwner(player)
                     );
 
                     for (String name : members) {

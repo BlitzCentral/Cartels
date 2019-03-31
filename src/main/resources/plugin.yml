@@ -1,7 +1,7 @@
 name: ${project.name}
-main: DeviousMines
+main: com.blitzcentral.cartels.Cartels
 version: ${project.version}
-author: BLitZzMc
+author: BlitzCentral
 commands:
    cartel:
       aliases: [c, cart]
